@@ -5,10 +5,7 @@ const APIKEY = "5aaeb0c0c30479c224f891798b7ec5b5";
 // Variables
 var searchTerm = "";
 
-// Search button on click
-$("#searchButton").on("click", function () {
-    // Clears the previous weather result
-    $("#weather-results").empty();
+function showData() {
     // Fetches the users search input and stores it in a variable
     searchTerm = $("#searchTerm").val();
     // Cretes a new list item
@@ -44,7 +41,7 @@ $("#searchButton").on("click", function () {
         // Fetches the image icon from the api and displays it in an <img> element
         var icon = $("<img>");
         var iconCode = result.weather[0].icon;
-        var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
+        var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
         icon.attr("src", iconURL);
 
         // Creates a heading featuring the city name + date
@@ -58,7 +55,7 @@ $("#searchButton").on("click", function () {
 
         // Creates an element to display the humidity
         var humidity = $("<h5>");
-        humidity.text("Humidity " + result.main.humidity + " %");
+        humidity.text("Humidity " + result.main.humidity + "%");
 
         var windSpeed = $("<h5>");
         // Convert wind speed from m/s to km/h
@@ -98,7 +95,7 @@ $("#searchButton").on("click", function () {
 
             // Appends all the current weather data to the weather results div
             $("#weather-results").append(weatherCity, temp, humidity, windSpeed, uvIndex);
-            
+
             // New api call using lat & lon to find the daily forecast (data wasn't included in the first two API calls)
             var forecastQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely, hourly,&appid=" + APIKEY + "&units=metric";
             $.ajax({
@@ -106,9 +103,50 @@ $("#searchButton").on("click", function () {
                 method: "GET"
             }).then(function (forecastResult) {
                 console.log(forecastResult);
+                for (i = 1; i < 6; i++) {
+                    // New div for each daily forecast
+                    var forecastDiv = $("<div>");
 
+                    // Converts time into date
+                    var UNIX_Timestamp = forecastResult.daily[i].dt;
+                    var date = new Date(UNIX_Timestamp * 1000);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    // Displays date in readable format
+                    var cityDate = "(" + day + "/" + month + "/" + year + ")";
+
+                    // Gets the icon
+                    var icon = $("<img>");
+                    var iconCode = forecastResult.daily[i].weather[0].icon;
+                    console.log(iconCode);
+                    var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
+                    icon.attr("src", iconURL);
+
+                    // Gets the temperature
+                    var temp = $("<p>");
+                    temp.text("Temp: " + forecastResult.daily[i].temp.day + " °C");
+
+                    // Gets the humidity
+                    var humidity = $("<p>");
+                    humidity.text("Humidity" + forecastResult.daily[i].humidity + "%");
+
+                    // Appends the data to the div
+                    forecastDiv.append(cityDate, icon, temp, humidity);
+                    // Styles the div
+                    forecastDiv.attr("class", "STYLING-HERE");
+                    $("#forecast-results").append(forecastDiv);
+                }
             });
         });
     });
+}
+
+// Search button on click
+$("#searchButton").on("click", function () {
+    // Clears the previous weather result
+    $("#weather-results").empty();
+    $("#forecast-results").empty();
+    showData();
 });
-    // 5 Day Forecast here
+
