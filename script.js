@@ -1,12 +1,14 @@
-var APIkey = "5aaeb0c0c30479c224f891798b7ec5b5";
+// Constants 
+const COUNT = 5;
+const APIKEY = "5aaeb0c0c30479c224f891798b7ec5b5";
+
+// Variables
 var searchTerm = "";
 
-var city = "";
-var countryCode = "";
-var UNIX_Timestamp = 0;
-
+// Search button on click
 $("#searchButton").on("click", function () {
-    event.preventDefault();
+    // Clears the previous weather result
+    $("#weather-results").empty();
     // Fetches the users search input and stores it in a variable
     searchTerm = $("#searchTerm").val();
     // Cretes a new list item
@@ -24,12 +26,12 @@ $("#searchButton").on("click", function () {
     // Adds the list item to the list
     $("#history").append(historyItem);
 
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + APIkey + "&units=metric";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + APIKEY + "&units=metric";
+
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (result) {
-        console.log(result);
 
         // Uses the unix timestamp and converts into readable date format
         var UNIX_Timestamp = result.dt;
@@ -39,15 +41,16 @@ $("#searchButton").on("click", function () {
         var year = date.getFullYear();
         var cityDate = "(" + day + "/" + month + "/" + year + ")";
 
-        // Creates a heading featuring the city name + date
-        weatherCity = $("<h3>");
-        weatherCity.text(result.name + " " + cityDate);
-
         // Fetches the image icon from the api and displays it in an <img> element
         var icon = $("<img>");
         var iconCode = result.weather[0].icon;
         var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
         icon.attr("src", iconURL);
+
+        // Creates a heading featuring the city name + date
+        weatherCity = $("<h3>");
+        weatherCity.text(result.name + " " + cityDate).append(icon);
+
 
         var temp = $("<h5>");
         // Included "&units=metric" in the queryURL, so we will use degerees celsius
@@ -64,24 +67,48 @@ $("#searchButton").on("click", function () {
         // Retrieve the latitude and longitude of the searched city
         var lat = result.coord.lat;
         var lon = result.coord.lon;
-        // New api call using lat & lon to find the UV Index
-        var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
+        // New api call using lat & lon to find the UV Index (data wasn't included in first API call)
+        var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKEY;
 
         $.ajax({
             url: uvQueryURL,
             method: "GET"
         }).then(function (uvResult) {
-            console.log(uvResult.value);
 
-            // Creates an element to display the UV Index
-            var uvIndex = $("<h5>");
-            uvIndex.text("UV Index: " + uvResult.value);
+            // If else statements to create the uvIndex html and give it the appropriate class based on the current uv rating
+            if (uvResult.value < 3) {
+                var uvIndex = $("<h5>").text("UV Index: ").append('<span class="low-uv">' + uvResult.value + '</span>');
+            }
 
-            $("#weather-results").append(weatherCity, icon, temp, humidity, windSpeed, uvIndex);
+            else if ((uvResult.value >= 3) && (uvResult.value < 6)) {
+                var uvIndex = $("<h5>").text("UV Index: ").append('<span class="moderate-uv">' + uvResult.value + '</span>');
+            }
+
+            else if ((uvResult.value >= 6) && (uvResult.value < 8)) {
+                var uvIndex = $("<h5>").text("UV Index: ").append('<span class="high-uv">' + uvResult.value + '</span>');
+            }
+
+            else if ((uvResult.value >= 8) && (uvResult.value < 11)) {
+                var uvIndex = $("<h5>").text("UV Index: ").append('<span class="very-high-uv">' + uvResult.value + '</span>');
+            }
+
+            else {
+                var uvIndex = $("<h5>").text("UV Index: ").append('<span class="extreme-uv">' + uvResult.value + '</span>');
+            }
+
+            // Appends all the current weather data to the weather results div
+            $("#weather-results").append(weatherCity, temp, humidity, windSpeed, uvIndex);
+            
+            // New api call using lat & lon to find the daily forecast (data wasn't included in the first two API calls)
+            var forecastQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely, hourly,&appid=" + APIKEY + "&units=metric";
+            $.ajax({
+                url: forecastQueryURL,
+                method: "GET"
+            }).then(function (forecastResult) {
+                console.log(forecastResult);
+
+            });
         });
     });
-
-    // 5 Day Forecast here
 });
-
-
+    // 5 Day Forecast here

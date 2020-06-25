@@ -64,3 +64,23 @@ body {
     border-radius: 10px;
     padding: 10px;
 }
+
+.low-uv {
+    background-color: #3ea72d;
+}
+
+.moderate-uv {
+    background-color: #fff300;
+}
+
+.high-uv {
+    background-color: #f18b00;
+}
+
+.very-high-uv {
+    background-color: #e53210;
+}
+
+.extreme-uv {
+    background-color: #b567a4;
+}
