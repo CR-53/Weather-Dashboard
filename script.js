@@ -3,6 +3,7 @@ var searchTerm = "";
 
 var city = "";
 var countryCode = "";
+var UNIX_Timestamp = 0;
 
 $("#searchButton").on("click", function () {
     event.preventDefault();
@@ -30,5 +31,20 @@ $("#searchButton").on("click", function () {
         method: "GET"
     }).then(function (result) {
         console.log(result);
+        
+        // Uses the unix timestamp and converts into readable date format
+        var UNIX_Timestamp = result.dt;
+        var date = new Date(UNIX_Timestamp * 1000);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var cityDate = "(" + day + "/" + month + "/" + year + ")";
+        console.log(cityDate);
+
+
+        weatherCity = $("<h3>");
+        weatherCity.text(result.name + " " + cityDate);
+        
+        $("#weather-results").append(weatherCity);
     });
 });
