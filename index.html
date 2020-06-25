@@ -14,17 +14,59 @@
 
 <nav class="navbar navbar-dark bg-dark">
     <h3 class="nav-title">Weather Dashboard</h3>
-  </nav>
+</nav>
 
 <div class="container">
+    <!-- start of search body -->
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-4 sidebar">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>
+                        <i class=""></i>
+                        Search for a city
+                    </h4>
+                    <input type="text" class="form-control" id="searchTerm">
+                    <button class="btn btn-primary" id="searchButton">Search</button>
+                    <!-- HISTORY HERE -->
+                    <div id="history-section">
+                        <ul id="history">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="weather-result panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h3>
+                            City
+                        </h3>
+                    </div>
+                </div>
+                <!-- WEATHER RESULTS HERE -->
+                <div id="weather-results">
+                </div>
+            </div>
+            <div class="forecast panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4>
+                            5-Day Forecast
+                        </h4>
+                    </div>
+                </div>
+                <!-- 5 DAY FORECAST HERE -->
+                <div id="forecast-results">
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="Work-Day-Schedular\lib\moment\moment.min.js"></script>
 <script src="script.js"></script>
 </body>
 

@@ -1,5 +1,66 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.navbar {
+    height: 75px;
+}
 
 .nav-title {
     margin: 0px auto 0px auto;
     color: white;
+}
+
+body {
+    margin: 5px;
+}
+
+#heading {
+    background: #20315A;
+    color: white;
+    text-align: center;
+}
+
+.row {
+    margin: 10px;
+}
+
+.sidebar {
+    background-color: lightgrey !important;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.weather-result {
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.forecast {
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#history {
+    list-style-type: none;
+}
+
+.history-list {
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    padding: 10px;
 }
