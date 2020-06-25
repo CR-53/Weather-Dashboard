@@ -25,14 +25,12 @@ $("#searchButton").on("click", function () {
     $("#history").append(historyItem);
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + APIkey + "&units=metric";
-
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (result) {
         console.log(result);
-        console.log(result.wind.speed);
-        
+
         // Uses the unix timestamp and converts into readable date format
         var UNIX_Timestamp = result.dt;
         var date = new Date(UNIX_Timestamp * 1000);
@@ -53,12 +51,37 @@ $("#searchButton").on("click", function () {
 
         var temp = $("<h5>");
         // Included "&units=metric" in the queryURL, so we will use degerees celsius
-        temp.text(result.main.temp + " °C");
+        temp.text("Temperature: " + result.main.temp + " °C");
+
+        // Creates an element to display the humidity
+        var humidity = $("<h5>");
+        humidity.text("Humidity " + result.main.humidity + " %");
 
         var windSpeed = $("<h5>");
         // Convert wind speed from m/s to km/h
-        windSpeed.text((result.wind.speed * 3.6) + " km/h");
-        
-        $("#weather-results").append(weatherCity, icon, temp, windSpeed);
+        windSpeed.text("Wind Speed " + (result.wind.speed * 3.6) + " km/h");
+
+        // Retrieve the latitude and longitude of the searched city
+        var lat = result.coord.lat;
+        var lon = result.coord.lon;
+        // New api call using lat & lon to find the UV Index
+        var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
+
+        $.ajax({
+            url: uvQueryURL,
+            method: "GET"
+        }).then(function (uvResult) {
+            console.log(uvResult.value);
+
+            // Creates an element to display the UV Index
+            var uvIndex = $("<h5>");
+            uvIndex.text("UV Index: " + uvResult.value);
+
+            $("#weather-results").append(weatherCity, icon, temp, humidity, windSpeed, uvIndex);
+        });
     });
+
+    // 5 Day Forecast here
 });
+
+
