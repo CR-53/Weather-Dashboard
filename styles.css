@@ -4,6 +4,20 @@
     box-sizing: border-box;
 }
 
+h5 {
+    margin-left: 10px;
+}
+
+h4 {
+    font-size: 1.2rem;
+    color: #003e7e;
+}
+
+h3 {
+    margin-left: 8px;
+    margin-bottom: 0rem;
+}
+
 .navbar {
     height: 75px;
 }
@@ -28,12 +42,35 @@ body {
 }
 
 .sidebar {
-    background-color: lightgrey !important;
+    background-color: #d3d3d34d !important;
     border-style: solid;
     border-width: 1px;
     border-color: lightgrey;
     border-radius: 10px;
     padding: 10px;
+    margin-top: 15px;
+}
+
+#search {
+    display: inline-block;
+    padding: 2px;
+}
+
+#searchTerm {
+    width: 78%;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+#searchButton {
+    width: 20%;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+#searchButton:hover {
+    background-color: #76a8dc;
+    border-color: #76a8dc;
 }
 
 .weather-result {
@@ -43,6 +80,7 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 20px;
+    margin-top: 15px;
 }
 
 .forecast {
@@ -62,25 +100,61 @@ body {
     border-width: 1px;
     border-color: lightgrey;
     border-radius: 10px;
-    padding: 10px;
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: #007bff;
+}
+
+.history-list:hover {
+    background-color: #76a8dc;
+    border-color: #76a8dc;
+    cursor: pointer;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 .low-uv {
     background-color: #3ea72d;
+    border-radius: 4px;
+    padding: 0px 4px 1px 4px;
 }
 
 .moderate-uv {
     background-color: #fff300;
+    border-radius: 4px;
+    padding: 0px 4px 1px 4px;
 }
 
 .high-uv {
     background-color: #f18b00;
+    border-radius: 4px;
+    padding: 0px 4px 1px 4px;
 }
 
 .very-high-uv {
     background-color: #e53210;
+    border-radius: 4px;
+    padding: 0px 4px 1px 4px;
 }
 
 .extreme-uv {
     background-color: #b567a4;
+    border-radius: 4px;
+    padding: 0px 4px 1px 4px;
+}
+
+.forecastDiv {
+    display: inline-block;
+    margin: 12px 5px 10px 5px;
+    background-color: lightskyblue;
+    padding: 4px 4px 4px 8px;
+    border-radius: 10px;
 }

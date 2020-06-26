@@ -17,7 +17,7 @@ function showData() {
     // Sets the link text to what the users search input was
     searchedCity.text(searchTerm);
     // Adds a URL to the link TODO: make this the same as the first searched URL
-    searchedCity.attr("href", "wwww.google.com");
+    searchedCity.attr("href", "#");
     // Adds the link to the list item
     historyItem.append(searchedCity);
     // Adds the list item to the list
@@ -48,18 +48,17 @@ function showData() {
         weatherCity = $("<h3>");
         weatherCity.text(result.name + " " + cityDate).append(icon);
 
-
         var temp = $("<h5>");
         // Included "&units=metric" in the queryURL, so we will use degerees celsius
-        temp.text("Temperature: " + result.main.temp + " °C");
+        temp.text("Temperature: " + result.main.temp + "°C");
 
         // Creates an element to display the humidity
         var humidity = $("<h5>");
-        humidity.text("Humidity " + result.main.humidity + "%");
+        humidity.text("Humidity: " + result.main.humidity + "%");
 
         var windSpeed = $("<h5>");
         // Convert wind speed from m/s to km/h
-        windSpeed.text("Wind Speed " + (result.wind.speed * 3.6) + " km/h");
+        windSpeed.text("Wind Speed: " + (result.wind.speed * 3.6) + " km/h");
 
         // Retrieve the latitude and longitude of the searched city
         var lat = result.coord.lat;
@@ -125,16 +124,16 @@ function showData() {
 
                     // Gets the temperature
                     var temp = $("<p>");
-                    temp.text("Temp: " + forecastResult.daily[i].temp.day + " °C");
+                    temp.text("Temp: " + forecastResult.daily[i].temp.day + "°C");
 
                     // Gets the humidity
                     var humidity = $("<p>");
-                    humidity.text("Humidity" + forecastResult.daily[i].humidity + "%");
+                    humidity.text("Humidity: " + forecastResult.daily[i].humidity + "%");
 
                     // Appends the data to the div
                     forecastDiv.append(cityDate, icon, temp, humidity);
                     // Styles the div
-                    forecastDiv.attr("class", "STYLING-HERE");
+                    forecastDiv.attr("class", "forecastDiv");
                     $("#forecast-results").append(forecastDiv);
                 }
             });
@@ -148,5 +147,19 @@ $("#searchButton").on("click", function () {
     $("#weather-results").empty();
     $("#forecast-results").empty();
     showData();
+    $(".history-list").on("click", function() {
+        alert(this.textContent);
+    });
 });
 
+$(document).on('keypress', function (e) {
+    if (e.which == 13) {
+        // Clears the previous weather result
+        $("#weather-results").empty();
+        $("#forecast-results").empty();
+        showData();
+        $(".history-list").on("click", function() {
+            alert(this.textContent);
+        });
+    }
+});
