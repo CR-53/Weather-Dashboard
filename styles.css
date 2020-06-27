@@ -103,20 +103,14 @@ body {
     padding: 8px;
     margin-bottom: 8px;
     background-color: #007bff;
+    color: white;
+    text-decoration: none;
 }
 
 .history-list:hover {
     background-color: #76a8dc;
     border-color: #76a8dc;
     cursor: pointer;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
-a:hover {
     color: white;
     text-decoration: none;
 }
