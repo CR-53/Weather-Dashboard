@@ -21,7 +21,7 @@ function showData() {
     // Adds the link to the list item
     historyItem.append(searchedCity);
     // Adds the list item to the list
-    $("#history").append(historyItem);
+    $("#history").prepend(historyItem);
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + APIKEY + "&units=metric";
 
@@ -154,12 +154,6 @@ $("#searchButton").on("click", function () {
 
 $(document).on('keypress', function (e) {
     if (e.which == 13) {
-        // Clears the previous weather result
-        $("#weather-results").empty();
-        $("#forecast-results").empty();
-        showData();
-        $(".history-list").on("click", function() {
-            alert(this.textContent);
-        });
+        $("#searchButton").click();
     }
 });
