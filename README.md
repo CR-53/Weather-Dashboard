@@ -4,4 +4,5 @@
 
 https://cr-53.github.io/Weather-Dashboard/
 
-![Home Page](Assets/WorkDaySchedular.png)
+![Weather Dashboard](Assets/weather-dashboard.png)
+
